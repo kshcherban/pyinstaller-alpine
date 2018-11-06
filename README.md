@@ -36,8 +36,14 @@ requirements will automatically be installed with `pip`.
 This will output a built app to the `dist` sub-directory in your source
 directory. The app can be ran on an Alpine OS:
 
-    ./dist/example
+    ./dist/dynamic
 
+Also if you don't set environment variable `COMPILE_STATIC=false`, static binary
+will be placed into.
+
+    ./dist/static
+
+For static binary creation [staticx](https://github.com/JonathonReinhart/staticx/) is used.
 
 ### Encrypting Your App
 

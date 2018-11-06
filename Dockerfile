@@ -7,15 +7,20 @@ RUN apk --update --no-cache add \
     musl-dev \
     libc-dev \
     gcc \
+    g++ \
+    make \
     git \
     pwgen \
+    libffi-dev \
+    openssl-dev \
+    xz-dev \
     && pip install --upgrade pip
 
 # Install pycrypto so --key can be used with PyInstaller
 RUN pip install \
     pycrypto
 
-ARG PYINSTALLER_TAG=v3.2
+ARG PYINSTALLER_TAG=v3.4
 
 # Build bootloader for alpine
 RUN git clone --depth 1 --single-branch --branch $PYINSTALLER_TAG https://github.com/pyinstaller/pyinstaller.git /tmp/pyinstaller \
@@ -23,6 +28,9 @@ RUN git clone --depth 1 --single-branch --branch $PYINSTALLER_TAG https://github
     && python ./waf configure --no-lsb all \
     && pip install .. \
     && rm -Rf /tmp/pyinstaller
+
+# Install statics
+RUN pip install backports.lzma patchelf-wrapper staticx
 
 VOLUME /src
 WORKDIR /src
